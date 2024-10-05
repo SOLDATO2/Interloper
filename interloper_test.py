@@ -92,6 +92,7 @@ def interpolate_frames(model, frames, output_path, fps, device):
         frame2_interpolated = frame2_interpolated.astype(np.uint8)
         interpolated_frames.append(frames[i])
         interpolated_frames.append(frame2_interpolated)
+        print("Frame '" + str(i) + "' interpolado.")
     counter2 = perf_counter()
     print(counter2-counter1)
     interpolated_frames.append(frames[-1])
@@ -102,17 +103,17 @@ def main(video_path, output_path, model_path="frame_interpolation_model_BETA.pth
     model = FrameInterpolationModel().to(device)
     
     if os.path.exists(model_path):
-        model.load_state_dict(torch.load(model_path))
+        model.load_state_dict(torch.load(model_path, map_location=device))
         print("Modelo carregado de", model_path)
     else:
         print("Modelo salvo não encontrado em", model_path)
         return
 
-    frames, fps = extract_frames(video_path, max_seconds=60)
+    frames, fps = extract_frames(video_path, max_seconds=15)
     interpolate_frames(model, frames, output_path, fps, device)
     print(f'Vídeo interpolado salvo em {output_path}')
 
 if __name__ == "__main__":
-    video_path = 'videos\\boss_puppy.mp4'
-    output_path = 'interlope_videos\\boss_puppy_interlope_BETA.mp4'
+    video_path = '/home/squade/Documents/GitHub/Interloper/videos/du_squirrel.mp4'
+    output_path = '/home/squade/Documents/GitHub/Interloper/output/du_squirrel2.mp4'
     main(video_path, output_path)

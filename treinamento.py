@@ -174,7 +174,11 @@ def main(video_path, model_path="frame_interpolation_model_BETA.pth"):
 
     load_model = input("Deseja carregar o modelo salvo? (s/n): ").strip().lower() == 's'
     if load_model and os.path.exists(model_path):
-        model.load_state_dict(torch.load(model_path))
+        
+        # Se o modelo tiver sido treinado anteriormente com uma gpu e não tiver um gpu disponível agora
+        # carregamos o modelo adaptando para cpu
+        model.load_state_dict(torch.load(model_path, map_location=device))
+            
         print("Modelo carregado de", model_path)
         continuar_treinando = input("Continuar treinando modelo salvo? (s/n): ").strip().lower() == 's'
         if continuar_treinando:
@@ -192,5 +196,5 @@ def main(video_path, model_path="frame_interpolation_model_BETA.pth"):
         train_model(model, train_loader, val_loader, device, epochs=epochs, lr=lr, save_path=model_path)
 
 if __name__ == "__main__":
-    video_path = 'videos\\boss_puppy.mp4'
+    video_path = '/home/squade/Documents/GitHub/Interloper/videos/du_squirrel.mp4'
     main(video_path)
