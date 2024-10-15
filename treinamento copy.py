@@ -28,7 +28,7 @@ class FrameInterpolationModel(nn.Module):
             #MaxPool tem o objetivo de extrair as informações mais importantes da imagem em um bloco 2x2.
             #isso aumenta a eficiencia, focando apenas nas areas mais importantes
             #Talvez remover esse parametro pode aumentar a qualidade da imagem?
-            #nn.MaxPool2d(2),
+            nn.MaxPool2d(2),
             #O Dropout funciona desligando (ou "dropando") aleatoriamente uma fração das unidades (neurônios) na rede neural durante a fase de treinamento.
             #Isso significa que, durante cada iteração de treinamento, algumas unidades não são atualizadas. 
             # A fração de unidades a serem dropadas é determinada por um parâmetro p, que representa a probabilidade de qualquer unidade ser dropada.
@@ -41,7 +41,7 @@ class FrameInterpolationModel(nn.Module):
             
             #Esta camada realiza o upsampling, que significa aumentar a resolução espacial da imagem,
             #essencialmente revertendo o efeito de pooling que foi aplicado no encoder.
-            #nn.Upsample(scale_factor=2, mode='bilinear',),
+            nn.Upsample(scale_factor=2, mode='bilinear',),
             
             #Essa camada convolucional transforma os 64 canais de características no frame final,
             #com 3 canais correspondentes a uma imagem RGB (vermelho, verde, azul).
@@ -218,5 +218,5 @@ def main(videos_dir, model_path="frame_interpolation_model_BETA.pth"):
         
 
 if __name__ == "__main__":
-    diretorio_videos = 'videos3'
+    diretorio_videos = 'videos'
     main(videos_dir=diretorio_videos)

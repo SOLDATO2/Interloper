@@ -14,14 +14,14 @@ class FrameInterpolationModel(nn.Module):
         self.encoder = nn.Sequential(
             nn.Conv2d(6, 128, kernel_size=3, padding=1),
             nn.PReLU(),
-            #nn.MaxPool2d(2),
+            nn.MaxPool2d(2),
             nn.Dropout(p=0.2) #O Dropout funciona desligando (ou "dropando") aleatoriamente uma fração das unidades (neurônios) na rede neural durante a fase de treinamento. Isso significa que, durante cada iteração de treinamento, algumas unidades não são atualizadas. A fração de unidades a serem dropadas é determinada por um parâmetro p, que representa a probabilidade de qualquer unidade ser dropada.
         )
         self.decoder = nn.Sequential(
             nn.Conv2d(128, 64, kernel_size=3, padding=1),
             nn.PReLU(),
             #nn.Upsample(scale_factor=3, mode='nearest', align_corners=False),  # Aumenta a resolução
-            #nn.Upsample(scale_factor=3, mode='bilinear'),
+            nn.Upsample(scale_factor=3, mode='bilinear'),
             nn.Conv2d(64, 3, kernel_size=3, padding=1),
         )
 
@@ -120,6 +120,6 @@ def main(video_path, output_path, model_path="frame_interpolation_model_BETA.pth
     print(f'Vídeo interpolado salvo em {output_path}')
 
 if __name__ == "__main__":
-    video_path = 'videos3\\thelastofus.mp4'
-    output_path = 'interlope_videos\\thelastofus_interlope2_2.mp4'
+    video_path = 'videos\\darkurge_talk.mp4'
+    output_path = 'interlope_videos\\darkurge_talk_interlope2.mp4'
     main(video_path, output_path)
