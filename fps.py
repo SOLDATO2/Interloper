@@ -1,6 +1,6 @@
 import cv2
 
-def calcular_fps(video_path):
+def calcular_fps_resolucao(video_path):
     # Abrir o vídeo
     cap = cv2.VideoCapture(video_path)
 
@@ -10,10 +10,18 @@ def calcular_fps(video_path):
 
     # Obter a taxa de quadros (FPS)
     fps = cap.get(cv2.CAP_PROP_FPS)
+
+    # Obter a largura e altura do vídeo (resolução)
+    largura = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    altura = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+    # Liberar o vídeo
     cap.release()
-    return fps
+
+    return fps, largura, altura
 
 # Exemplo de uso
-video_path = 'videos_30fps\\gta5.mp4'
-fps = calcular_fps(video_path)
+video_path = 'darkurge_intro.mp4'
+fps, largura, altura = calcular_fps_resolucao(video_path)
 print(f'A quantidade de FPS do vídeo é: {fps}')
+print(f'A resolução do vídeo é: {largura}x{altura}')
